@@ -2,6 +2,7 @@
 
 > Automated report extraction and consolidation across dozens of Salesforce orgs — in one command.
 
+[![CI](https://github.com/juan-alejo/salesforce-multi-org-aggregator/actions/workflows/ci.yml/badge.svg)](https://github.com/juan-alejo/salesforce-multi-org-aggregator/actions/workflows/ci.yml)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Playwright](https://img.shields.io/badge/browser-Playwright%20Chromium-45ba4b)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
