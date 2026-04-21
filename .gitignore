@@ -43,6 +43,10 @@ out/
 logs/
 *.log
 
+# Persisted browser sessions (contain auth cookies — treat like passwords)
+data/
+debug_pw.py
+
 # Playwright
 test-results/
 playwright-report/
