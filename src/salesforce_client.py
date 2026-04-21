@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 from loguru import logger
-from playwright.async_api import BrowserContext, Page, async_playwright
+from playwright.async_api import BrowserContext, FrameLocator, Page, async_playwright
 from tenacity import AsyncRetrying, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from .config_loader import OrgConfig, ReportConfig
@@ -65,7 +65,7 @@ class SalesforceClient:
     def _meta_path(self) -> Path:
         return _SESSIONS_DIR / f"{self.org.name}.meta.json"
 
-    async def __aenter__(self) -> "SalesforceClient":
+    async def __aenter__(self) -> SalesforceClient:
         self._pw = await async_playwright().start()
         self._browser = await self._pw.chromium.launch(headless=not self.headed)
 
@@ -199,16 +199,16 @@ class SalesforceClient:
         finally:
             await page.close()
 
-    async def _wait_for_report_loaded(self, frame) -> None:
+    async def _wait_for_report_loaded(self, frame: FrameLocator) -> None:
         await frame.locator(_REPORT_LOADED_BTN).first.wait_for(timeout=60_000)
 
-    async def _open_more_actions(self, frame) -> None:
+    async def _open_more_actions(self, frame: FrameLocator) -> None:
         # "Más acciones" / "More actions" — the ▼ split-button next to Edit.
         await frame.locator(
             "button:has-text('Más acciones'), button:has-text('More actions')"
         ).first.click(timeout=10_000)
 
-    async def _click_export_menu_item(self, frame) -> None:
+    async def _click_export_menu_item(self, frame: FrameLocator) -> None:
         await frame.get_by_role("menuitem", name=_EXPORT_MENU).click(timeout=10_000)
 
     async def _select_details_only(self, page: Page) -> None:

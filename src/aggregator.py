@@ -17,7 +17,7 @@ async def run(config: AppConfig, *, headed: bool = False) -> list[ReportResult]:
     org_results = await asyncio.gather(*tasks, return_exceptions=True)
 
     merged: list[ReportResult] = []
-    for org, result in zip(config.orgs, org_results):
+    for org, result in zip(config.orgs, org_results, strict=True):
         if isinstance(result, Exception):
             logger.error(f"[{org.name}] failed: {result}")
             continue
@@ -30,6 +30,5 @@ async def run(config: AppConfig, *, headed: bool = False) -> list[ReportResult]:
 async def _run_org(
     org: OrgConfig, semaphore: asyncio.Semaphore, *, headed: bool
 ) -> list[ReportResult]:
-    async with semaphore:
-        async with SalesforceClient(org, headed=headed) as client:
-            return [await client.fetch_report(r) for r in org.reports]
+    async with semaphore, SalesforceClient(org, headed=headed) as client:
+        return [await client.fetch_report(r) for r in org.reports]
