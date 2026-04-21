@@ -1,0 +1,25 @@
+# Copy to orgs.yaml (gitignored) and fill in your orgs.
+#
+# Secrets (username/password) live in environment variables, not here.
+# Each org references its creds by env var name via `username_env` / `password_env`.
+
+concurrency: 4          # How many orgs to process in parallel
+output_format: csv      # csv | sqlite | xlsx
+output_path: out/report # Extension appended automatically
+
+orgs:
+  - name: Prod-US
+    login_url: https://login.salesforce.com
+    username_env: SF_PROD_US_USER
+    password_env: SF_PROD_US_PASS
+    reports:
+      - id: "00O1x0000012345"
+        name: Weekly Pipeline
+
+  - name: Staging-EU
+    login_url: https://test.salesforce.com
+    username_env: SF_STAGE_EU_USER
+    password_env: SF_STAGE_EU_PASS
+    reports:
+      - id: "00O1x0000067890"
+        name: Weekly Pipeline
