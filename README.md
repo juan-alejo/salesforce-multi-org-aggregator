@@ -29,7 +29,8 @@ This tool solves that. Point it at a YAML file listing your orgs, tell it which 
 
 ```bash
 # 1. Install deps
-pip install -r requirements.txt
+pip install -r requirements.txt         # runtime only
+pip install -r requirements-dev.txt     # adds pytest + ruff
 playwright install chromium
 
 # 2. Copy the example config and fill in your orgs
