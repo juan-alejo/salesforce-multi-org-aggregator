@@ -42,6 +42,8 @@ out/
 *.db
 logs/
 *.log
+!examples/*.csv
+!examples/*.xlsx
 
 # Persisted browser sessions (contain auth cookies — treat like passwords)
 data/
